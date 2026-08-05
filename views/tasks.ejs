@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Tareas - Gestor de Tareas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Gestor de Tareas</h1>
+    <div>
+      <span>Hola, <%= username %></span>
+      <a href="/logout" data-testid="logout-link">Cerrar sesión</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="form-section">
+      <h2>Nueva tarea</h2>
+
+      <% if (errors && errors.length > 0) { %>
+        <ul class="error-message" data-testid="form-errors">
+          <% errors.forEach(function(err) { %>
+            <li><%= err.msg %></li>
+          <% }); %>
+        </ul>
+      <% } %>
+
+      <form method="POST" action="/tasks" data-testid="task-form">
+        <label for="title">Título (máx. 50 caracteres)</label>
+        <input type="text" id="title" name="title" maxlength="200" data-testid="task-title-input"
+               value="<%= oldInput.title || '' %>">
+
+        <label for="description">Descripción</label>
+        <textarea id="description" name="description" data-testid="task-description-input"><%= oldInput.description || '' %></textarea>
+
+        <label for="dueDate">Fecha límite</label>
+        <input type="date" id="dueDate" name="dueDate" data-testid="task-duedate-input"
+               value="<%= oldInput.dueDate || '' %>">
+
+        <button type="submit" data-testid="create-task-button">Crear tarea</button>
+      </form>
+    </section>
+
+    <section class="list-section">
+      <h2>Mis tareas (<%= tasks.length %>)</h2>
+
+      <% if (tasks.length === 0) { %>
+        <p data-testid="empty-state">No tienes tareas todavía.</p>
+      <% } %>
+
+      <table data-testid="tasks-table">
+        <thead>
+          <tr><th>Título</th><th>Descripción</th><th>Fecha límite</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+          <% tasks.forEach(function(task) { %>
+            <tr data-testid="task-row" data-task-id="<%= task.id %>">
+              <td class="task-title"><%= task.title %></td>
+              <td><%= task.description %></td>
+              <td><%= task.dueDate %></td>
+              <td class="actions">
+                <a href="/tasks/<%= task.id %>/edit" data-testid="edit-task-link">Editar</a>
+                <form method="POST" action="/tasks/<%= task.id %>/delete" style="display:inline">
+                  <button type="submit" data-testid="delete-task-button" onclick="return confirm('¿Eliminar esta tarea?')">Eliminar</button>
+                </form>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar tarea - Gestor de Tareas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Gestor de Tareas</h1>
+    <div>
+      <span>Hola, <%= username %></span>
+      <a href="/logout" data-testid="logout-link">Cerrar sesión</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="form-section">
+      <h2>Editar tarea</h2>
+
+      <% if (errors && errors.length > 0) { %>
+        <ul class="error-message" data-testid="form-errors">
+          <% errors.forEach(function(err) { %>
+            <li><%= err.msg %></li>
+          <% }); %>
+        </ul>
+      <% } %>
+
+      <form method="POST" action="/tasks/<%= task.id %>" data-testid="edit-task-form">
+        <label for="title">Título (máx. 50 caracteres)</label>
+        <input type="text" id="title" name="title" maxlength="200" data-testid="task-title-input"
+               value="<%= task.title %>">
+
+        <label for="description">Descripción</label>
+        <textarea id="description" name="description" data-testid="task-description-input"><%= task.description %></textarea>
+
+        <label for="dueDate">Fecha límite</label>
+        <input type="date" id="dueDate" name="dueDate" data-testid="task-duedate-input"
+               value="<%= task.dueDate %>">
+
+        <button type="submit" data-testid="update-task-button">Guardar cambios</button>
+      </form>
+
+      <a href="/tasks" data-testid="back-to-tasks-link">&larr; Volver a mis tareas</a>
+    </section>
+  </main>
+</body>
+</html>

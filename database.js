@@ -9,7 +9,7 @@ const db = low(adapter);
 // Estructura inicial de la base de datos
 db.defaults({ users: [], tasks: [] }).write();
 
-// Si no existe el usuario de prueba, lo creamos.
+
 // Estas credenciales son las que se usarán en TODOS los casos de prueba de Selenium.
 const existingUser = db.get('users').find({ username: 'admin' }).value();
 if (!existingUser) {

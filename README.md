@@ -1,7 +1,5 @@
-Gestor de Tareas
-
-Aplicación web con login y CRUD de tareas, construida como base para pruebas
-automatizadas con Selenium (Tarea 4).
+TaskMaster
+Aplicación web con login y CRUD de tareas.
 
 Stack
 - Node.js + Express

@@ -2,21 +2,23 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Mis Tareas - Gestor de Tareas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mis Tareas - TaskMaster</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header class="topbar">
-    <h1>Gestor de Tareas</h1>
-    <div>
+    <span class="brand">TaskMaster</span>
+    <div class="user-area">
       <span>Hola, <%= username %></span>
       <a href="/logout" data-testid="logout-link">Cerrar sesión</a>
     </div>
   </header>
 
   <main class="container">
-    <section class="form-section">
-      <h2>Nueva tarea</h2>
+    <section class="form-section sheet">
+      <span class="section-eyebrow">Nueva nota</span>
+      <h2>Agregar tarea</h2>
 
       <% if (errors && errors.length > 0) { %>
         <ul class="error-message" data-testid="form-errors">
@@ -38,15 +40,19 @@
         <input type="date" id="dueDate" name="dueDate" data-testid="task-duedate-input"
                value="<%= oldInput.dueDate || '' %>">
 
-        <button type="submit" data-testid="create-task-button">Crear tarea</button>
+        <button type="submit" data-testid="create-task-button">Agregar a mi bloc</button>
       </form>
     </section>
 
-    <section class="list-section">
+    <section class="list-section sheet">
+      <span class="section-eyebrow">Tu bloc</span>
       <h2>Mis tareas (<%= tasks.length %>)</h2>
 
       <% if (tasks.length === 0) { %>
-        <p data-testid="empty-state">No tienes tareas todavía.</p>
+        <div class="empty-state" data-testid="empty-state">
+          <span class="doodle">&#128221;</span>
+          Tu bloc está vacío — anota tu primera tarea.
+        </div>
       <% } %>
 
       <table data-testid="tasks-table">
@@ -57,8 +63,8 @@
           <% tasks.forEach(function(task) { %>
             <tr data-testid="task-row" data-task-id="<%= task.id %>">
               <td class="task-title"><%= task.title %></td>
-              <td><%= task.description %></td>
-              <td><%= task.dueDate %></td>
+              <td class="task-desc"><%= task.description %></td>
+              <td><span class="due-tag"><%= task.dueDate %></span></td>
               <td class="actions">
                 <a href="/tasks/<%= task.id %>/edit" data-testid="edit-task-link">Editar</a>
                 <form method="POST" action="/tasks/<%= task.id %>/delete" style="display:inline">

@@ -2,20 +2,22 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Editar tarea - Gestor de Tareas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editar tarea - TaskMaster</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header class="topbar">
-    <h1>Gestor de Tareas</h1>
-    <div>
+    <span class="brand">TaskMaster</span>
+    <div class="user-area">
       <span>Hola, <%= username %></span>
       <a href="/logout" data-testid="logout-link">Cerrar sesión</a>
     </div>
   </header>
 
-  <main class="container">
-    <section class="form-section">
+  <main class="container" style="grid-template-columns: 1fr; max-width: 480px;">
+    <section class="form-section sheet">
+      <span class="section-eyebrow">Editar nota</span>
       <h2>Editar tarea</h2>
 
       <% if (errors && errors.length > 0) { %>
@@ -41,7 +43,7 @@
         <button type="submit" data-testid="update-task-button">Guardar cambios</button>
       </form>
 
-      <a href="/tasks" data-testid="back-to-tasks-link">&larr; Volver a mis tareas</a>
+      <a href="/tasks" class="back-link" data-testid="back-to-tasks-link">&larr; Volver a mis tareas</a>
     </section>
   </main>
 </body>
